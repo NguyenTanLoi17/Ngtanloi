@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="img/1.png" alt="Logo NTL FASHION STYLE">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="shop.html">Cửa Hàng</a></li>
+                    <li><a href="account.html">Tài Khoản</a></li>
+                    <li><a href="news.html">Tin Tức</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="banner">
+        <img src="img/banner.png" alt="Ảnh bìa đăng ký">
+    </div>
+    
+    <section id="register" class="account-section">
+        <div class="container">
+            <h2>Đăng Ký</h2>
+            <div class="form-container">
+                <form action="process_register.php" method="post">
+                    <label for="fullname">Họ và tên:</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="username">Tên đăng nhập:</label>
+                    <input type="text" id="username" name="username" required>
+                    
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" id="password" name="password" required>
+                    
+                    <button type="submit">Đăng Ký</button>
+                </form>
+                <p>Đã có tài khoản? <a href="account.html" style="color: #ffc107;">Đăng nhập ngay</a></p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 NTL FASHION STORE. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Khoản</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="img/1.png" alt="Logo NTL FASHION STYLE">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="shop.html">Cửa Hàng</a></li>
+                    <li><a href="account.html">Tài Khoản</a></li>
+                    <li><a href="news.html">Tin Tức</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="banner">
+        <img src="img/banner.png" alt="Ảnh bìa tài khoản">
+    </div>
+    
+    <section id="account" class="account-section">
+        <div class="container">
+            <h2>Tài Khoản</h2>
+            <div class="form-container">
+                <form id="login-form" action="process_login.php" method="post">
+                    <label for="username">Tên đăng nhập:</label>
+                    <input type="text" id="username" name="username" required>
+                    
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" id="password" name="password" required>
+                    
+                    <button type="submit">Đăng Nhập</button>
+                </form>
+                <p>Hoặc đăng nhập bằng:</p>
+                <div class="social-login">
+                    <div class="g-signin2" data-onsuccess="onGoogleSignIn"></div>
+                    <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" onlogin="checkLoginState();"></div>
+                </div>
+                <p>Chưa có tài khoản? <a href="register.html" style="color: #ffc107;">Đăng ký ngay</a></p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 NTL FASHION STORE. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+     
+        function onGoogleSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId());
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail());
+          
+            var id_token = googleUser.getAuthResponse().id_token;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'process_google_login.php');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('idtoken=' + id_token);
+        }
+
+    
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: 'YOUR_FACEBOOK_APP_ID',
+                cookie: true,
+                xfbml: true,
+                version: 'v9.0'
+            });
+            FB.AppEvents.logPageView();   
+        };
+
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        function statusChangeCallback(response) {
+            if (response.status === 'connected') {
+                FB.api('/me', {fields: 'name, email'}, function(response) {
+                    console.log('Successful login for: ' + response.name);
+                    
+                 
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'process_facebook_login.php');
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onload = function() {
+                        console.log('Signed in as: ' + xhr.responseText);
+                    };
+                    xhr.send('accesstoken=' + response.authResponse.accessToken);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
